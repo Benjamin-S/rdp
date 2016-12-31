@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Random Date Sampler</title>
+  <link href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet prefetch'>
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1>Dan Symons' Magic Date Picker <small>Although not made by him</small></h1>
+    </div>
+    <div class="row">
+      <div class="col-md-4 btnDiv">
+        <input class="btn btn-primary" type="button" onclick="go()" value="Generate Dates"> <input class="btn btn-info" disabled="true" id="csvBtn" onclick="createCSV()" type="button" value="Export to CSV"> <input class="btn btn-danger" onclick="clearForm()" type="button" value="Clear">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <h3>Start Date:</h3><input class="center-block" id="startDate" name="startDate" type="date">
+      </div>
+      <div class="col-md-4 middleCol">
+        <div class="row exclusions">
+          <span>Excluding Weekends</span> <input id="weekendCheck" type="checkbox">
+        </div>
+        <div class="row exclusions">
+          <span>Excluding US Bank Holidays</span> <input id="USCheck" type="checkbox">
+        </div>
+        <div class="row exclusions">
+          <span>Excluding UK Bank Holidays</span> <input id="UKCheck" type="checkbox">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <h3>End Date:</h3><input class="center-block" id="endDate" name="endDate" type="date">
+      </div>
+    </div>
+    <div class="row extraPadding" id="alertBox"></div>
+    <div class="row extraPadding">
+      <div class="col-md-2">
+        <select class="form-control">
+          <option id="firstSelection" value="40">
+            40 Dates
+          </option>
+        </select>
+        <div id="firstOut"></div>
+      </div>
+      <div class="col-md-2">
+        <select class="form-control">
+          <option id="secondSelection" value="25">
+            25 Dates
+          </option>
+        </select>
+        <div id="secondOut"></div>
+      </div>
+      <div class="col-md-2">
+        <select class="form-control">
+          <option id="thirdSelection" value="15">
+            15 Dates
+          </option>
+        </select>
+        <div id="thirdOut"></div>
+      </div>
+      <div class="col-md-2">
+        <select class="form-control">
+          <option id="fourthSelection" value="10">
+            10 Dates
+          </option>
+        </select>
+        <div id="fourthOut"></div>
+      </div>
+      <div class="col-md-2">
+        <select class="form-control">
+          <option id="fifthSelection" value="5">
+            5 Dates
+          </option>
+        </select>
+        <div id="fifthOut"></div>
+      </div>
+      <div class="col-md-2">
+        <select class="form-control">
+          <option id="sixthSelection" value="2">
+            2 Dates
+          </option>
+        </select>
+        <div id="sixthOut"></div>
+      </div>
+    </div>
+  </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'>
+  </script> 
+  <script src='http://momentjs.com/downloads/moment.js'>
+  </script> 
+  <script src="js/index.js">
+  </script>
+</body>
+</html>

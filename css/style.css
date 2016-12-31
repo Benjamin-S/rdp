@@ -1,0 +1,23 @@
+.exclusions {
+	text-align: center;
+}
+.extraPadding {
+	padding-top: 20px;
+}
+h3 {
+	text-align: center;
+}
+
+/*
+.btnDiv {
+	text-align: right;
+}
+*/
+
+.middleCol {
+	padding-top: 2em;
+	vertical-align: middle;
+}
+li {
+	padding: 0 0 0 1em !important;
+}
