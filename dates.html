@@ -6,7 +6,7 @@
   <link href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet prefetch'>
   <link href="css/style.css" rel="stylesheet">
 </head>
-<body>
+<body onload="fillDropDowns()">
   <div class="container">
     <div class="page-header">
       <h1>Dan Symons' Magic Date Picker <small>Although not made by him</small></h1>
@@ -38,50 +38,38 @@
     <div class="row extraPadding" id="alertBox"></div>
     <div class="row extraPadding">
       <div class="col-md-2">
-        <select class="form-control">
-          <option id="firstSelection" value="40">
-            40 Dates
-          </option>
+        <select id="firstSelection" class="form-control">
+
         </select>
         <div id="firstOut"></div>
       </div>
       <div class="col-md-2">
-        <select class="form-control">
-          <option id="secondSelection" value="25">
-            25 Dates
-          </option>
+        <select id="secondSelection" class="form-control">
+
         </select>
         <div id="secondOut"></div>
       </div>
       <div class="col-md-2">
-        <select class="form-control">
-          <option id="thirdSelection" value="15">
-            15 Dates
-          </option>
+        <select id="thirdSelection" class="form-control">
+
         </select>
         <div id="thirdOut"></div>
       </div>
       <div class="col-md-2">
-        <select class="form-control">
-          <option id="fourthSelection" value="10">
-            10 Dates
-          </option>
+        <select id="fourthSelection" class="form-control">
+
         </select>
         <div id="fourthOut"></div>
       </div>
       <div class="col-md-2">
-        <select class="form-control">
-          <option id="fifthSelection" value="5">
-            5 Dates
-          </option>
+        <select id="fifthSelection" class="form-control">
+
         </select>
         <div id="fifthOut"></div>
       </div>
       <div class="col-md-2">
-        <select class="form-control">
-          <option id="sixthSelection" value="2">
-            2 Dates
-          </option>
+        <select id="sixthSelection" class="form-control">
+
         </select>
         <div id="sixthOut"></div>
       </div>
@@ -92,6 +80,8 @@
   <script src='http://momentjs.com/downloads/moment.js'>
   </script> 
   <script src="js/index.js">
+  </script>
+    <script src="js/underscore.js">
   </script>
 </body>
 </html>
