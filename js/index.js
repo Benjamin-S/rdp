@@ -128,20 +128,17 @@ function go() {
         showElement("csvBtn");
         var addArr = initArray.slice(0);
         addArr.unshift(numDatesEnum[output] + " dates")
-        //console.log(initArray);
+            //console.log(initArray);
         allData.push(addArr);
         //document.getElementById("output").innerHTML = initArray;
         clearOutput();
         clearChildNodes("alertBox");
         document.getElementById(outputEnum[output]).appendChild(createList(initArray));
         for (var i = output + 1; i < outputEnum.length; i++) {
-            if(parseInt(numDatesEnum[i-1]) <= parseInt(numDatesEnum[i]))
-            {
-                document.getElementById("alertBox").appendChild(createAlert("danger", "Error:", "Number of dates must flow from high to low. Dates " + numDatesEnum[i-1] + " must be greater than Dates " + numDatesEnum[i]));
+            if (parseInt(numDatesEnum[i - 1]) <= parseInt(numDatesEnum[i])) {
+                document.getElementById("alertBox").appendChild(createAlert("danger", "Error:", "Number of dates must flow from high to low. Dates " + numDatesEnum[i - 1] + " must be greater than Dates " + numDatesEnum[i]));
                 break;
-            }
-            else
-            {
+            } else {
                 var tempArray = createSubset(initArray, numDatesEnum[i]);
                 initArray = tempArray;
                 addArr = tempArray.slice(0);
@@ -228,9 +225,9 @@ function clearForm() {
 }
 
 function fillDropDowns() {
-    for(var x = 0; x < selectID.length; x++) {
+    for (var x = 0; x < selectID.length; x++) {
         select = document.getElementById(selectID[x])
-        for(var i = 1; i <= 100; i++) {
+        for (var i = 1; i <= 100; i++) {
             option = document.createElement("option");
             option.value = i;
             option.innerHTML = i + " Dates";
