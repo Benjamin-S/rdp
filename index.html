@@ -3,19 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Random Date Sampler</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet prefetch'>
     <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body onload="fillDropDowns()">
-    <div class="container">
-        <div class="page-header">
-            <h1>Random Date Picker <small>Benjamin-S</small></h1>
-        </div>
+    <div class="page-header">
+        <h1>Random Date Picker <small>Benjamin-S</small></h1>
+    </div>
+    <div class="container mainContainer">
         <div class="row">
-            <div class="col-md-4 btnDiv">
+            <div class="btnDiv">
                 <input class="btn btn-primary" onclick="go()" type="button" value="Generate Dates">
                 <input class="btn btn-info" disabled="true" id="csvBtn" onclick="createCSV()" type="button" value="Export to CSV">
                 <input class="btn btn-danger" onclick="clearForm()" type="button" value="Clear">
@@ -23,7 +23,7 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <h3>Start Date:</h3>
+                <h3>Start Date</h3>
                 <input class="center-block" id="startDate" name="startDate" type="date">
             </div>
             <div class="col-md-4 middleCol">
@@ -41,12 +41,12 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <h3>End Date:</h3>
+                <h3>End Date</h3>
                 <input class="center-block" id="endDate" name="endDate" type="date">
             </div>
         </div>
         <div class="row extraPadding" id="alertBox"></div>
-        <div class="row extraPadding">
+        <div class="row extraPadding outDiv">
             <div class="col-md-2">
                 <select class="form-control" id="firstSelection">
                 </select>
@@ -76,6 +76,21 @@
                 <select class="form-control" id="sixthSelection">
                 </select>
                 <div id="sixthOut"></div>
+            </div>
+        </div>
+    </div>
+    <div id="social">
+        <div class="container">
+            <div class="row centered">
+                <div class="col-lg-3">
+                </div>
+                <div class="col-lg-3">
+                </div>
+                <div class="col-lg-3">
+                </div>
+                <div class="col-lg-3">
+                    &copy; 2016<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Benjamin-S.
+                </div>
             </div>
         </div>
     </div>
