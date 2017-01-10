@@ -38,32 +38,66 @@ function ddmmyy(Date) {
 }
 /* Returns the initial subset of dates based on start date, end date and count*/
 function initialSubset(args) {
-    var startDate = moment(Date.parse($('#startDate').val()));
-    var endDate = moment(Date.parse($('#endDate').val()));
-    var subsetSize = args == "weekend" ? SubsetSize(startDate, endDate, true) : SubsetSize(startDate, endDate, false);
-    var subArr = [];
-    for (var x = 0; x < subsetSize; x++) {
-        var randDate = moment(new Date(getRndInteger(startDate, endDate)));
-        //console.log(randDate.day());
-        if (subArr.includes(randDate.format("DD/MM/YYYY"))) {
-            console.log("Date already in array.");
-            x -= 1;
-            continue;
-        } else if (args == "weekend" && (randDate.day() == 0 || randDate.day() == 6)) {
-            console.log("Cannot select weekend.")
-            x -= 1;
-            continue;
+    //console.log(randDate.day());
+    if (!!navigator.userAgent.match(/Trident\/7\./)) {
+        //do stuff for IE.
+        var startDate = moment($('#startDate').val(), "DD-MM-YYYY");
+        var endDate = moment($('#endDate').val(), "DD-MM-YYYY");
+        var subsetSize = args == "weekend" ? SubsetSize(startDate, endDate, true) : SubsetSize(startDate, endDate, false);
+        var subArr = [];
+        console.log(startDate);
+        console.log(endDate);
+        console.log(SubsetSize(startDate, endDate, false));
+        for (var x = 0; x < subsetSize; x++) {
+            var randDate = moment(new Date(getRndInteger(startDate, endDate)));
+            if (subArr.indexOf(randDate.format("DD/MM/YYYY")) != -1) {
+                console.log("Date already in array.");
+                x -= 1;
+                continue;
+            } else if (args == "weekend" && (randDate.day() == 0 || randDate.day() == 6)) {
+                console.log("Cannot select weekend.")
+                x -= 1;
+                continue;
+            }
+            if (document.getElementById("USCheck").checked == true && USHolidays.indexOf(randDate.format("DD/MM/YYYY")) != -1) {
+                console.log("Cannot be a US holiday.");
+                x -= 1
+                continue;
+            } else if (document.getElementById("UKCheck").checked == true && UKHolidays.indexOf(randDate.format("DD/MM/YYYY")) != -1) {
+                console.log("Cannot be a UK holiday.");
+                x -= 1
+                continue;
+            } else {
+                subArr.push(randDate.format("DD/MM/YYYY"));
+            }
         }
-        if (document.getElementById("USCheck").checked == true && USHolidays.includes(randDate.format("DD/MM/YYYY"))) {
-            console.log("Cannot be a US holiday.");
-            x -= 1
-            continue;
-        } else if (document.getElementById("UKCheck").checked == true && UKHolidays.includes(randDate.format("DD/MM/YYYY"))) {
-            console.log("Cannot be a UK holiday.");
-            x -= 1
-            continue;
-        } else {
-            subArr.push(randDate.format("DD/MM/YYYY"));
+    } else {
+        var startDate = moment(Date.parse($('#startDate').val()));
+        var endDate = moment(Date.parse($('#endDate').val()));
+        var subsetSize = args == "weekend" ? SubsetSize(startDate, endDate, true) : SubsetSize(startDate, endDate, false);
+        var subArr = [];
+        for (var x = 0; x < subsetSize; x++) {
+            var randDate = moment(new Date(getRndInteger(startDate, endDate)));
+            if (subArr.includes(randDate.format("DD/MM/YYYY"))) {
+                console.log("Date already in array.");
+                x -= 1;
+                continue;
+            } else if (args == "weekend" && (randDate.day() == 0 || randDate.day() == 6)) {
+                console.log("Cannot select weekend.")
+                x -= 1;
+                continue;
+            }
+            if (document.getElementById("USCheck").checked == true && USHolidays.includes(randDate.format("DD/MM/YYYY"))) {
+                console.log("Cannot be a US holiday.");
+                x -= 1
+                continue;
+            } else if (document.getElementById("UKCheck").checked == true && UKHolidays.includes(randDate.format("DD/MM/YYYY"))) {
+                console.log("Cannot be a UK holiday.");
+                x -= 1
+                continue;
+            } else {
+                subArr.push(randDate.format("DD/MM/YYYY"));
+            }
         }
     }
     subArr.sort(function(a, b) {
@@ -116,6 +150,7 @@ function createAlert(cat, type, msg) {
 function go() {
     //console.log("Go button pressed");
     //console.log(USHolidays.includes("04/07/2016"));
+    console.log($("#startDate").val());
     updateNumDatesEnum();
     if (moment(Date.parse($('#endDate').val())).diff(moment(Date.parse($('#startDate').val())), 'days') > 2) {
         var initArray = [];
@@ -157,19 +192,34 @@ function go() {
 }
 
 function createCSV() {
-    var lineArray = [];
-    allData = _.zip.apply(null, allData);
-    allData.forEach(function(infoArray, index) {
-        var line = infoArray.join(",");
-        lineArray.push(index == 0 ? "data:text/csv;charset=utf-8," + line : line);
-    });
-    var csvContent = lineArray.join('\n');
-    var encodedUri = encodeURI(csvContent);
-    var link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "RandomDates.csv");
-    document.body.appendChild(link); // Required for FF
-    link.click();
+    if (!!navigator.userAgent.match(/Trident\/7\./)) {
+        var lineArray = [];
+        allData = _.zip.apply(null, allData);
+        allData.forEach(function(infoArray, index) {
+            var line = infoArray.join(",");
+            lineArray.push(line);
+        });
+        var csvContent = lineArray.join('\n');
+        var IEwindow = window.open();
+        IEwindow.document.write(csvContent);
+        IEwindow.document.close();
+        IEwindow.document.execCommand('SaveAs', true, 'randomDates' + ".csv");
+        IEwindow.close();
+    } else {
+        var lineArray = [];
+        allData = _.zip.apply(null, allData);
+        allData.forEach(function(infoArray, index) {
+            var line = infoArray.join(",");
+            lineArray.push(index == 0 ? "data:text/csv;charset=utf-8," + line : line);
+        });
+        var csvContent = lineArray.join('\n');
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "RandomDates.csv");
+        document.body.appendChild(link); // Required for FF
+        link.click();
+    }
 }
 
 function clearChildNodes(ID) {
@@ -192,11 +242,20 @@ function createSubset(set, sizeOfSub) {
     var subArray = [];
     for (var i = 0; i < sizeOfSub; i++) {
         var randSet = set[getRndInteger(0, set.length - 1)];
-        if (subArray.includes(randSet)) {
-            i -= 1;
-            continue;
+        if (!!navigator.userAgent.match(/Trident\/7\./)) {
+            if (subArray.indexOf(randSet) != -1) {
+                i -= 1;
+                continue;
+            } else {
+                subArray.push(randSet);
+            }
         } else {
-            subArray.push(randSet);
+            if (subArray.includes(randSet)) {
+                i -= 1;
+                continue;
+            } else {
+                subArray.push(randSet);
+            }
         }
     }
     subArray.sort(function(a, b) {
@@ -240,4 +299,17 @@ function fillDropDowns() {
     $('#fourthSelection').val(10);
     $('#fifthSelection').val(5);
     $('#sixthSelection').val(2);
+}
+
+function fixDatefields() {
+    var input = document.getElementById("startDate");
+    var input2 = document.getElementById("endDate");
+    if (input.type != 'date') {
+        $('input[type="date"]').datepicker({ dateFormat: 'dd-mm-yy' });
+        $('input2[type="date"]').datepicker({ dateFormat: 'dd-mm-yy' });
+    }
+    if (!!navigator.userAgent.match(/Trident\/7\./)) {
+        $(".outDiv").css("padding-bottom", "8em");
+    }
+
 }
