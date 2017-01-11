@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Random Date Sampler</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet prefetch'>
@@ -19,9 +21,47 @@
 </head>
 
 <body onload="fillDropDowns()">
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Random Date Picker</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Nav header</li>
+                            <li><a href="#">Separated link</a></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+    <!--
+
     <div class="page-header">
         <h1>Random Date Picker <small>Benjamin-S</small></h1>
     </div>
+
+    -->
     <div class="container mainContainer">
         <div class="row">
             <div class="btnDiv">
@@ -55,38 +95,56 @@
             </div>
         </div>
         <div class="row extraPadding" id="alertBox"></div>
-        <div class="row extraPadding outDiv">
-            <div class="col-md-2">
-                <select class="form-control" id="firstSelection">
-                </select>
-                <div id="firstOut"></div>
-            </div>
-            <div class="col-md-2">
-                <select class="form-control" id="secondSelection">
-                </select>
-                <div id="secondOut"></div>
-            </div>
-            <div class="col-md-2">
-                <select class="form-control" id="thirdSelection">
-                </select>
-                <div id="thirdOut"></div>
-            </div>
-            <div class="col-md-2">
-                <select class="form-control" id="fourthSelection">
-                </select>
-                <div id="fourthOut"></div>
-            </div>
-            <div class="col-md-2">
-                <select class="form-control" id="fifthSelection">
-                </select>
-                <div id="fifthOut"></div>
-            </div>
-            <div class="col-md-2">
-                <select class="form-control" id="sixthSelection">
-                </select>
-                <div id="sixthOut"></div>
+        <div class="col-md-4">
+            <div class="row outDiv">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control" id="firstSelection">
+                    </select>
+                    <div id="firstOut"></div>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control" id="secondSelection">
+                    </select>
+                    <div id="secondOut"></div>
+                </div>
             </div>
         </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-2">
+                    <select class="form-control" id="thirdSelection">
+                    </select>
+                    <div id="thirdOut"></div>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control" id="fourthSelection">
+                    </select>
+                    <div id="fourthOut"></div>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control" id="fifthSelection">
+                    </select>
+                    <div id="fifthOut"></div>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control" id="sixthSelection">
+                    </select>
+                    <div id="sixthOut"></div>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control" id="seventhSelection">
+                    </select>
+                    <div id="seventhOut"></div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div style="height: 6em;">
+
     </div>
     <div id="social">
         <div class="container">

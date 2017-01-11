@@ -13,7 +13,9 @@ h3 {
 .btnDiv {
     text-align: left;
     padding-bottom: 0.5em;
+    padding-top: 0.5em;
     border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
 }
 
 html,
@@ -49,8 +51,7 @@ h1 {
 }
 
 .mainContainer {
-    padding-top: 3em;
-    height: 80%;
+    /*height: 80%;*/
     background-color: white;
     /*border-radius: 1em;*/
 }
@@ -73,8 +74,10 @@ i {
     font-size: 2em;
 }
 
-.outDiv {
-    margin-bottom: 8em;
+#firstSelection, #secondSelection, #thirdSelection, #fourthSelection, #fifthSelection,
+#sixthSelection, #seventhSelection {
+	padding-left: 0px;
+	padding-right: 0px;
 }
 
 #social {

@@ -1,7 +1,7 @@
 /*Global Variables*/
-var outputEnum = ["firstOut", "secondOut", "thirdOut", "fourthOut", "fifthOut", "sixthOut"];
-var numDatesEnum = [$('#firstSelection').val(), $('#secondSelection').val(), $('#thirdSelection').val(), $('#fourthSelection').val(), $('#fifthSelection').val(), $('#sixthSelection').val()];
-var selectID = ['firstSelection', 'secondSelection', 'thirdSelection', 'fourthSelection', 'fifthSelection', 'sixthSelection'];
+var outputEnum = ["firstOut", "secondOut", "thirdOut", "fourthOut", "fifthOut", "sixthOut", "seventhOut"];
+var numDatesEnum = [$('#firstSelection').val(), $('#secondSelection').val(), $('#thirdSelection').val(), $('#fourthSelection').val(), $('#fifthSelection').val(), $('#sixthSelection').val(), $('#seventhSelection').val()];
+var selectID = ['firstSelection', 'secondSelection', 'thirdSelection', 'fourthSelection', 'fifthSelection', 'sixthSelection', 'seventhSelection'];
 var USHolidays = ["01/01/2015", "19/01/2015", "16/02/2015", "25/05/2015", "04/07/2015", "07/09/2015", "12/10/2015", "11/11/2015", "26/11/2015", "25/12/2015", "01/01/2016", "18/01/2016", "15/02/2016", "30/05/2016", "04/07/2016", "05/09/2016", "10/10/2016", "11/11/2016", "24/11/2016", "26/12/2016", "02/01/2017", "16/01/2017", "20/02/2017", "29/05/2017", "04/07/2017", "04/09/2017", "09/10/2017", "11/11/2017", "23/11/2017", "25/12/2017", "01/01/2018", "15/01/2018", "19/02/2018", "28/05/2018", "04/07/2018", "03/09/2018", "08/10/2018", "12/11/2018", "22/11/2018", "25/12/2018"]
 var UKHolidays = ["02/01/2017", "14/04/2017", "17/04/2017", "01/05/2017", "29/05/2017", "28/08/2017", "25/12/2017", "26/12/2017", "01/01/2018", "30/03/2018", "02/04/2018", "07/05/2018", "28/05/2018", "27/08/2018", "25/12/2018", "26/12/2018"]
 var output;
@@ -14,6 +14,7 @@ function updateNumDatesEnum() {
     numDatesEnum[3] = $('#fourthSelection').val();
     numDatesEnum[4] = $('#fifthSelection').val();
     numDatesEnum[5] = $('#sixthSelection').val();
+    numDatesEnum[6] = $('#seventhSelection').val();
 }
 
 
@@ -174,14 +175,25 @@ function go() {
                 document.getElementById("alertBox").appendChild(createAlert("danger", "Error:", "Number of dates must flow from high to low. Dates " + numDatesEnum[i - 1] + " must be greater than Dates " + numDatesEnum[i]));
                 break;
             } else {
-                var tempArray = createSubset(initArray, numDatesEnum[i]);
-                initArray = tempArray;
-                addArr = tempArray.slice(0);
-                addArr.unshift(numDatesEnum[i] + " dates.");
-                //console.log(initArray);
-                allData.push(addArr);
-                document.getElementById(outputEnum[i]).appendChild(createList(initArray));
-                //console.log(allData);
+                if (i == outputEnum.length - 1) {
+                    var tempArray = createSubset(initArray, numDatesEnum[i]);
+                    initArray = convertToMonth(tempArray);
+                    addArr = tempArray.slice(0);
+                    addArr.unshift(numDatesEnum[i] + " dates.");
+                    //console.log(initArray);
+                    allData.push(addArr);
+                    document.getElementById(outputEnum[i]).appendChild(createList(initArray));
+                } else {
+                    var tempArray = createSubset(initArray, numDatesEnum[i]);
+                    initArray = tempArray;
+                    addArr = tempArray.slice(0);
+                    addArr.unshift(numDatesEnum[i] + " dates.");
+                    //console.log(initArray);
+                    allData.push(addArr);
+                    document.getElementById(outputEnum[i]).appendChild(createList(initArray));
+                    //console.log(allData); 
+                }
+
             }
         }
     } else {
@@ -189,6 +201,14 @@ function go() {
         clearChildNodes("alertBox");
         document.getElementById("alertBox").appendChild(createAlert("danger", "Error:", "The dates selected are invalid."));
     }
+}
+
+function convertToMonth(arr) {
+    for(var i = 0; i < arr.length; i++)
+    {
+        arr[i] = moment(arr[i], "DD-MM-YYYY").format("MMMM");
+    }
+    return arr;
 }
 
 function createCSV() {
@@ -236,6 +256,7 @@ function clearOutput() {
     document.getElementById("fourthOut").innerHTML = ""
     document.getElementById("fifthOut").innerHTML = ""
     document.getElementById("sixthOut").innerHTML = ""
+    document.getElementById("seventhOut").innerHTML = ""
 }
 
 function createSubset(set, sizeOfSub) {
@@ -273,7 +294,6 @@ function showElement(ID) {
 }
 
 function clearForm() {
-
     console.log($('#firstSelection').val());
     console.log(numDatesEnum[0]);
     clearOutput();
@@ -296,9 +316,10 @@ function fillDropDowns() {
     $('#firstSelection').val(40);
     $('#secondSelection').val(25);
     $('#thirdSelection').val(15);
-    $('#fourthSelection').val(10);
+    $('#fourthSelection').val(8);
     $('#fifthSelection').val(5);
-    $('#sixthSelection').val(2);
+    $('#sixthSelection').val(3);
+    $('#seventhSelection').val(2);
 }
 
 function fixDatefields() {
@@ -308,8 +329,9 @@ function fixDatefields() {
         $('input[type="date"]').datepicker({ dateFormat: 'dd-mm-yy' });
         $('input2[type="date"]').datepicker({ dateFormat: 'dd-mm-yy' });
     }
+    /*
     if (!!navigator.userAgent.match(/Trident\/7\./)) {
         $(".outDiv").css("padding-bottom", "8em");
     }
-
+*/
 }
