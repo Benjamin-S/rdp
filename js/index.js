@@ -174,7 +174,6 @@ function go() {
                 break;
             } else {
                 if (i == outputEnum.length - 1 || numDatesEnum[i] <=3) {
-                    console.log(outputEnum[i])
                     var tempArray = createSubset(initArray, numDatesEnum[i]);
                     initArray = tempArray;
                     addArr = tempArray.slice(0);
