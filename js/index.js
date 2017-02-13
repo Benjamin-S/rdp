@@ -173,7 +173,7 @@ function go() {
                 document.getElementById("alertBox").appendChild(createAlert("danger", "Error:", "Number of dates must flow from high to low. Dates " + numDatesEnum[i - 1] + " must be greater than Dates " + numDatesEnum[i]));
                 break;
             } else {
-                if (i == outputEnum.length - 1 || numDatesEnum[i] <=3) {
+                if (i == outputEnum.length - 1 || i == outputEnum.length - 2 ) { //numDatesEnum[i] <=3) {
                     var tempArray = createSubset(initArray, numDatesEnum[i]);
                     initArray = tempArray;
                     addArr = tempArray.slice(0);
@@ -218,7 +218,7 @@ function createCSV() {
         });
         var csvContent = lineArray.join('\n');
         var IEwindow = window.open();
-        IEwindow.document.write(csvContent);
+        IEwindow.document.write('sep=,\r\n' + csvContent);
         IEwindow.document.close();
         IEwindow.document.execCommand('SaveAs', true, 'randomDates' + ".csv");
         IEwindow.close();
