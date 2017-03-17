@@ -293,7 +293,7 @@ function createCSV(allData) {
             type: "text/csv;charset=utf-8;"
         });
         b.onclick = function() {
-            window.navigator.msSaveOrOpenBlob(blobObject, 'MyFile.csv');
+            window.navigator.msSaveOrOpenBlob(blobObject, 'RandomDates.csv');
         }
     }
   }
