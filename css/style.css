@@ -10,6 +10,10 @@ h3 {
     text-align: center;
 }
 
+.calign {
+    text-align: center;
+}
+
 .btnDiv {
     text-align: left;
     padding-bottom: 0.5em;
@@ -96,4 +100,10 @@ i {
 
 #social i:hover {
     color: #3B98BA
+}
+
+.ui-datepicker-trigger{display: inline;}
+
+.dinline{
+    display: inline;
 }
