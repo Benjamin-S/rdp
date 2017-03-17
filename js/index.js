@@ -411,7 +411,6 @@ function clearForm() {
     $('#ndDt').datepicker("setDate", "0d");
     clearChildNodes("alertBox");
     if (!!navigator.userAgent.match(/Trident\/7\./)) {
-      $('#csvBtn').onClick();
     }
     else {
       var link = document.getElementById("csvBtn");
