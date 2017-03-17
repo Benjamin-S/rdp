@@ -56,16 +56,16 @@
     -->
     <div class="container mainContainer">
         <div class="row">
-            <div class="btnDiv col-xs-8 col-xs-offset-2 col-sm-offset-2 text-center">
+            <div class="btnDiv col-xs-8 col-xs-offset-2 col-sm-offset-2 text-center" id="btnContainer">
                 <input class="btn btn-primary" onclick="go()" type="button" value="Generate Dates">
-                <input class="btn btn-info" disabled="true" id="csvBtn" onclick="createCSV()" type="button" value="Export to CSV">
+                <a class="btn btn-info" id="csvBtn" type="button" value="Export to CSV">Export to CSV</a>
                 <input class="btn btn-danger" onclick="clearForm()" type="button" value="Clear">
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
                 <h3>Start Date</h3>
-                <input class="center-block" id="startDate" name="startDate" type="date">
+                <div class="center-block calign"><input class="dinline" id="strtDt" name="startDate" type="text"></div>
             </div>
             <div class="col-md-4 middleCol">
                 <div class="row exclusions">
@@ -83,7 +83,7 @@
             </div>
             <div class="col-md-4">
                 <h3>End Date</h3>
-                <input class="center-block" id="endDate" name="endDate" type="date">
+                <div class="center-block calign"><input class="dinline" id="ndDt" name="endDate" type="text"></div>
             </div>
         </div>
         <div class="row extraPadding" id="alertBox"></div>
@@ -134,7 +134,6 @@
             </div>
         </div>
     </div>
-    </div>
     <div style="height: 6em;">
 
     </div>
@@ -156,6 +155,7 @@
             </div>
         </div>
     </div>
+    <script src="js/polyfill.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
     <script src="js/jquery-ui.js"></script>
     <script src='js/moment.js'></script>
