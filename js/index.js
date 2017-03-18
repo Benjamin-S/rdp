@@ -187,7 +187,7 @@ function go() {
                 break;
             } else {
                 /* Months output*/
-                if (i == outputEnum.length - 1 || i == outputEnum.length - 2) {
+                if (i == outputEnum.length - 2) {
                     //numDatesEnum[i] <=3) {
                     var initcopy = new Array(initArray);
                     var crap = [];
@@ -204,9 +204,22 @@ function go() {
                         //console.log(unique);
                     }
                     document.getElementById(outputEnum[i]).appendChild(createList(unique));
+                    initArray = unique;
                     addArr = unique.slice(0);
                     addArr.unshift(csvHeaders[i]);
                     allData.push(addArr);
+                }
+                else if (i == outputEnum.length - 1) {
+                  var unique = [].concat(_toConsumableArray(new Set(initArray)));
+                  while (unique.length > numDatesEnum[i]) {
+                      unique.splice(getRndInteger(0, unique.length - 1), 1);
+                      //console.log(unique);
+                  }
+                  document.getElementById(outputEnum[i]).appendChild(createList(unique));
+                  initArray = unique;
+                  addArr = unique.slice(0);
+                  addArr.unshift(csvHeaders[i]);
+                  allData.push(addArr);
                 }
                 /* Weeks starting with Monday based on previous dates */
                 else if (i == outputEnum.length - 3 || i == outputEnum.length - 4) {
