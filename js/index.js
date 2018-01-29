@@ -172,7 +172,7 @@ function go() {
             initArray = initialSubset("normal", startDate, endDate, rangeDays);
         }
         var allData = [];
-        $('#csvBtn').attr("disabled", false);
+        $('#csvBtn').removeClass("disabled");
         var addArr = initArray.slice(0);
         addArr.unshift(csvHeaders[output]);
         //console.log(initArray);
@@ -326,49 +326,6 @@ function createCSV(allData) {
   }
 }
 
-
-/*
-function createCSV() {
-    if (!!navigator.userAgent.match(/Trident\/7\./)) {
-        var lineArray = [];
-        allData = _.zip.apply(null, allData);
-        allData.forEach(function (infoArray, index) {
-            var line = infoArray.join(",");
-            lineArray.push(line);
-        });
-        var csvContent = lineArray.join('\n');
-        var a = document.createElement('a');
-        if(window.navigator.msSaveOrOpenBlob){
-            var blobObject = new Blob(allData);
-            a.onclick=function(){
-                window.navigator.msSaveOrOpenBlob(blobObject, 'MyFile.csv');
-            }
-        }
-        a.appendChild(document.createTextNode('Click to Download'));
-        document.body.appendChild(a);
-console.log("All data: " + allData);
-console.log("-------------------------------------------------------------");
-console.log(blobObject);
-        a.click();
-
-    } else {
-        var lineArray = [];
-        allData = _.zip.apply(null, allData);
-        allData.forEach(function (infoArray, index) {
-            var line = infoArray.join(",");
-            lineArray.push(index == 0 ? "data:text/csv;charset=utf-8," + line : line);
-        });
-        var csvContent = lineArray.join('\n');
-        var encodedUri = encodeURI(csvContent);
-        var link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", "RandomDates.csv");
-        document.body.appendChild(link); // Required for FF
-        link.click();
-    }
-}
-*/
-
 function clearChildNodes(nID) {
     var temp = document.getElementById(nID);
     if (temp.hasChildNodes()) {
@@ -390,7 +347,6 @@ function createSubset(sset, sizeOfSub) {
     var subArray = [];
     for (var i = 0; i < sizeOfSub; i++) {
         var randSet = sset[getRndInteger(0, sset.length - 1)];
-        //console.log('Subset rand: ' + randSet);
         if (!!navigator.userAgent.match(/Trident\/7\./)) {
             if (subArray.indexOf(randSet) != -1) {
                 i -= 1;
@@ -416,10 +372,8 @@ function createSubset(sset, sizeOfSub) {
 }
 
 function clearForm() {
-    //console.log($('#firstSelection').val());
-    //console.log(numDatesEnum[0]);
     clearOutput();
-    $('#csvBtn').attr("disabled", true);
+    $('#csvBtn').addClass("disabled");
     $('#strtDt').datepicker("setDate", "-1y");
     $('#ndDt').datepicker("setDate", "0d");
     clearChildNodes("alertBox");
@@ -456,40 +410,20 @@ function fixDatefields() {
 
     $.datepicker.setDefaults({
         defaultDate: 0,
-        showOn: "button",
+        showOn: "focus",
         dateFormat: 'dd/mm/yy',
         showButtonPanel: true,
         buttonImageOnly: true,
         buttonImage: "./css/images/calendar.png",
         buttonText: "Calendar"
     });
-    /*
-    $('#strtDt').datepicker({ defaultDate: -365, dateFormat: 'dd-mm-yy' });
-    $('#ndDt').datepicker({
-        defaultDate: 0,
-        dateFormat: 'dd-mm-yy',
-        showButtonPanel: true,
-        showOn: "button",
-        buttonImage: "images/calendar.gif",
-        buttonImageOnly: true,
-        buttonText: "Select date"
-    });
-    */
 
     $(function() {
         $('#strtDt').datepicker();
         $('#strtDt').datepicker("setDate", "-1y");
         $('#ndDt').datepicker();
         $('#ndDt').datepicker("setDate", "0d");
-        //$(".ui-datepicker-trigger").attr("src", "calendar.png");
     });
 
-    $('#csvBtn').attr("disabled", true);
-
-    //console.log("dates fixed");
-    /*
-    if (!!navigator.userAgent.match(/Trident\/7\./)) {
-        $(".outDiv").css("padding-bottom", "8em");
-    }
-    */
+    // $('#csvBtn').addClass("disabled");
 }
