@@ -1,3 +1,18 @@
+$(document).ready(function () {
+
+    fillDropDowns();
+    fixDatefields();
+
+    $('#genDatesBtn').on('click', function () {
+        go();
+    });
+
+    $('#clearFormBtn').on('click', function () {
+        clearForm();
+    });
+
+});
+
 function _toConsumableArray(baseArr) {
     "use strict";
     if (Array.isArray(baseArr)) {
@@ -34,13 +49,13 @@ function datePrint() {
     var startDate = moment(Date.parse($('#strtDt').val()));
     var endDate = moment(Date.parse($('#ndDt').val()));
     var randDate = moment(new Date(getRndInteger(startDate, endDate)));
-    //console.log(randDate.format("DD/MM/YYYY"));
-    //console.log(endDate.diff(startDate, 'days'));
 }
+
 // Hack and slash minmax random function inclusive.
 function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
 /* Formats the date object input to dd/mm/yy string */
 function ddmmyy(Date) {
     var date = Date.getDate();
@@ -48,33 +63,26 @@ function ddmmyy(Date) {
     var year = Date.getFullYear();
     return date.toString() + "/" + month.toString() + "/" + year.toString();
 }
+
 /* Returns the initial subset of dates based on start date, end date and count*/
 function initialSubset(args, startDate, endDate, range) {
-    //console.log(randDate.day());
     if (!!navigator.userAgent.match(/Trident\/7\./)) {
         //do stuff for IE.
         var subsetSize = args == "weekend" ? SubsetSize(startDate, endDate, true) : SubsetSize(startDate, endDate, false);
         var subArr = [];
-        //console.log(startDate);
-        //console.log(endDate);
-        //console.log(SubsetSize(range));
         for (var x = 0; x < subsetSize; x++) {
             var randDate = moment(new Date(getRndInteger(startDate, endDate)));
             if (subArr.indexOf(randDate.format("DD/MM/YYYY")) != -1) {
-                //console.log("Date already in array.");
                 x -= 1;
                 continue;
             } else if (args == "weekend" && (randDate.day() == 0 || randDate.day() == 6)) {
-                //console.log("Cannot select weekend.");
                 x -= 1;
                 continue;
             }
             if (document.getElementById("USCheck").checked == true && USHolidays.indexOf(randDate.format("DD/MM/YYYY")) != -1) {
-                //console.log("Cannot be a US holiday.");
                 x -= 1;
                 continue;
             } else if (document.getElementById("UKCheck").checked == true && UKHolidays.indexOf(randDate.format("DD/MM/YYYY")) != -1) {
-                //console.log("Cannot be a UK holiday.");
                 x -= 1;
                 continue;
             } else {
@@ -87,20 +95,16 @@ function initialSubset(args, startDate, endDate, range) {
         for (var x = 0; x < subsetSize; x++) {
             var randDate = moment(new Date(getRndInteger(startDate, endDate)));
             if (subArr.includes(randDate.format("DD/MM/YYYY"))) {
-                //console.log("Date already in array.");
                 x -= 1;
                 continue;
             } else if (args == "weekend" && (randDate.day() == 0 || randDate.day() == 6)) {
-                //console.log("Cannot select weekend.");
                 x -= 1;
                 continue;
             }
             if (document.getElementById("USCheck").checked == true && USHolidays.includes(randDate.format("DD/MM/YYYY"))) {
-                //console.log("Cannot be a US holiday.");
                 x -= 1;
                 continue;
             } else if (document.getElementById("UKCheck").checked == true && UKHolidays.includes(randDate.format("DD/MM/YYYY"))) {
-                //console.log("Cannot be a UK holiday.");
                 x -= 1;
                 continue;
             } else {
@@ -108,7 +112,7 @@ function initialSubset(args, startDate, endDate, range) {
             }
         }
     }
-    subArr.sort(function(a, b) {
+    subArr.sort(function (a, b) {
         a = a.split('/').reverse().join('');
         b = b.split('/').reverse().join('');
         return a > b ? 1 : a < b ? -1 : 0;
@@ -155,15 +159,11 @@ function std_date(rawDate) {
 }
 
 function go() {
-    //console.log("Go button pressed");
-    //console.log(USHolidays.includes("04/07/2016"));
-    //console.log($("#strtDt").val());
     updateNumDatesEnum();
     var startDate = moment(std_date(document.getElementById('strtDt').value), 'YYYY-MM-DD');
     var endDate = moment(std_date(document.getElementById('ndDt').value), 'YYYY-MM-DD');
     var rangeDays = endDate.diff(startDate, 'days');
     var rangeMonths = endDate.diff(startDate, 'months');
-    //console.log(rangeDays);
     if (rangeMonths > 5) {
         var initArray = [];
         if (document.getElementById("weekendCheck").checked == true) {
@@ -175,9 +175,7 @@ function go() {
         $('#csvBtn').removeClass("disabled");
         var addArr = initArray.slice(0);
         addArr.unshift(csvHeaders[output]);
-        //console.log(initArray);
         allData.push(addArr);
-        //document.getElementById("output").innerHTML = initArray;
         clearOutput();
         clearChildNodes("alertBox");
         document.getElementById(outputEnum[output]).appendChild(createList(initArray));
@@ -186,9 +184,7 @@ function go() {
                 document.getElementById("alertBox").appendChild(createAlert("danger", "Error:", "Number of dates must flow from high to low. Dates " + numDatesEnum[i - 1] + " must be greater than Dates " + numDatesEnum[i]));
                 break;
             } else {
-                /* Months output*/
                 if (i == outputEnum.length - 2) {
-                    //numDatesEnum[i] <=3) {
                     var initcopy = new Array(initArray);
                     var crap = [];
 
@@ -201,7 +197,6 @@ function go() {
                     var unique = [].concat(_toConsumableArray(new Set(crap)));
                     while (unique.length > numDatesEnum[i]) {
                         unique.splice(getRndInteger(0, unique.length - 1), 1);
-                        //console.log(unique);
                     }
                     document.getElementById(outputEnum[i]).appendChild(createList(unique));
                     initArray = unique;
@@ -210,16 +205,15 @@ function go() {
                     allData.push(addArr);
                 }
                 else if (i == outputEnum.length - 1) {
-                  var unique = [].concat(_toConsumableArray(new Set(initArray)));
-                  while (unique.length > numDatesEnum[i]) {
-                      unique.splice(getRndInteger(0, unique.length - 1), 1);
-                      //console.log(unique);
-                  }
-                  document.getElementById(outputEnum[i]).appendChild(createList(unique));
-                  initArray = unique;
-                  addArr = unique.slice(0);
-                  addArr.unshift(csvHeaders[i]);
-                  allData.push(addArr);
+                    var unique = [].concat(_toConsumableArray(new Set(initArray)));
+                    while (unique.length > numDatesEnum[i]) {
+                        unique.splice(getRndInteger(0, unique.length - 1), 1);
+                    }
+                    document.getElementById(outputEnum[i]).appendChild(createList(unique));
+                    initArray = unique;
+                    addArr = unique.slice(0);
+                    addArr.unshift(csvHeaders[i]);
+                    allData.push(addArr);
                 }
                 /* Weeks starting with Monday based on previous dates */
                 else if (i == outputEnum.length - 3 || i == outputEnum.length - 4) {
@@ -235,7 +229,6 @@ function go() {
                     var unique = [].concat(_toConsumableArray(new Set(crap)));
                     while (unique.length > numDatesEnum[i]) {
                         unique.splice(getRndInteger(0, unique.length - 1), 1);
-                        //console.log(unique);
                     }
                     document.getElementById(outputEnum[i]).appendChild(createList(unique));
                     initArray = unique;
@@ -247,21 +240,16 @@ function go() {
                     initArray = tempArray;
                     addArr = tempArray.slice(0);
                     addArr.unshift(csvHeaders[i]);
-                    //console.log(initArray);
                     allData.push(addArr);
                     document.getElementById(outputEnum[i]).appendChild(createList(initArray));
-                    //console.log(allData);
                 }
             }
         }
-        //console.log(allData);
         createCSV(allData);
     } else if (rangeMonths <= 5) {
-        //console.log("Dates are invalid");
         clearChildNodes("alertBox");
         document.getElementById("alertBox").appendChild(createAlert("danger", "Error:", "The dates selected need to be at least 6 months apart for optimum results."));
     } else {
-        //console.log("Dates are invalid");
         clearChildNodes("alertBox");
         document.getElementById("alertBox").appendChild(createAlert("danger", "Error:", "The dates selected are invalid."));
     }
@@ -288,42 +276,41 @@ function toMonth(monthArr) {
     return hold;
 }
 
-
 function createCSV(allData) {
-  if (!!navigator.userAgent.match(/Trident\/7\./)) {
-    var lineArray = [];
-    allData = _.zip.apply(null, allData);
-    allData.forEach(function(infoArray, index) {
-        var line = infoArray.join(",");
-        lineArray.push(line);
-    });
-    var csvContent = lineArray.join('\n');
-
-
-    var b = document.getElementById('csvBtn');
-    if (window.navigator.msSaveOrOpenBlob) {
-        blobObject = new Blob([decodeURIComponent(encodeURI(csvContent))], {
-            type: "text/csv;charset=utf-8;"
+    if (!!navigator.userAgent.match(/Trident\/7\./)) {
+        var lineArray = [];
+        allData = _.zip.apply(null, allData);
+        allData.forEach(function (infoArray, index) {
+            var line = infoArray.join(",");
+            lineArray.push(line);
         });
-        b.onclick = function() {
-            window.navigator.msSaveOrOpenBlob(blobObject, 'RandomDates.csv');
+        var csvContent = lineArray.join('\n');
+
+
+        var b = document.getElementById('csvBtn');
+        if (window.navigator.msSaveOrOpenBlob) {
+            blobObject = new Blob([decodeURIComponent(encodeURI(csvContent))], {
+                type: "text/csv;charset=utf-8;"
+            });
+            b.onclick = function () {
+                window.navigator.msSaveOrOpenBlob(blobObject, 'RandomDates.csv');
+            }
         }
     }
-  }
-  else {
-    var lineArray = [];
-    allData = _.zip.apply(null, allData);
-    allData.forEach(function (infoArray, index) {
-        var line = infoArray.join(",");
-        lineArray.push(index == 0 ? "data:text/csv;charset=utf-8," + line : line);
-    });
-    var csvContent = lineArray.join('\n');
-    var encodedUri = encodeURI(csvContent);
-    var link = document.getElementById("csvBtn");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "RandomDates.csv");
-    //document.body.appendChild(link); // Required for FF
-  }
+    else {
+        var lineArray = [];
+        allData = _.zip.apply(null, allData);
+        allData.forEach(function (infoArray, index) {
+            var line = infoArray.join(",");
+            lineArray.push(index == 0 ? "data:text/csv;charset=utf-8," + line : line);
+        });
+        var csvContent = lineArray.join('\n');
+        var encodedUri = encodeURI(csvContent);
+        var link = document.getElementById("csvBtn");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "RandomDates.csv");
+        //document.body.appendChild(link); // Required for FF
+    }
 }
 
 function clearChildNodes(nID) {
@@ -363,7 +350,7 @@ function createSubset(sset, sizeOfSub) {
             }
         }
     }
-    subArray.sort(function(a, b) {
+    subArray.sort(function (a, b) {
         a = a.split('/').reverse().join('');
         b = b.split('/').reverse().join('');
         return a > b ? 1 : a < b ? -1 : 0;
@@ -380,9 +367,9 @@ function clearForm() {
     if (!!navigator.userAgent.match(/Trident\/7\./)) {
     }
     else {
-      var link = document.getElementById("csvBtn");
-      link.removeAttribute("href");
-      link.removeAttribute("download");
+        var link = document.getElementById("csvBtn");
+        link.removeAttribute("href");
+        link.removeAttribute("download");
     }
 
 }
@@ -413,17 +400,22 @@ function fixDatefields() {
         showOn: "focus",
         dateFormat: 'dd/mm/yy',
         showButtonPanel: true,
-        buttonImageOnly: true,
-        buttonImage: "./css/images/calendar.png",
-        buttonText: "Calendar"
+        changeMonth: true,
+        changeYear: true
     });
 
-    $(function() {
+    $(function () {
         $('#strtDt').datepicker();
         $('#strtDt').datepicker("setDate", "-1y");
         $('#ndDt').datepicker();
         $('#ndDt').datepicker("setDate", "0d");
     });
 
-    // $('#csvBtn').addClass("disabled");
+    $('#startDatepicker').click(function () {
+        $('#strtDt').datepicker('show');
+    });
+
+    $('#endDatepicker').click(function () {
+        $('#ndDt').datepicker('show');
+    });
 }

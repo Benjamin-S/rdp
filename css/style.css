@@ -3,11 +3,20 @@ body {
     height: 100%;
 }
 
-.container {
+html {
+    overflow-y: scroll;
+}
+
+.centreCol {
+    margin: 0 auto;
+}
+
+.mainContainer {
     margin-top: 1rem;
 }
 
 .footer {
+    padding-top: 1em;
     padding-bottom: 1em;
     background-color: #f2f2f2;
     position: fixed;
